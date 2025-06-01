@@ -1,0 +1,425 @@
+/******************************************************
+
+			VARIAVEIS
+
+*******************************************************/
+
+
+:root {
+  --selecionado: rgba(114, 205, 22, 0.8);
+  --tabuleiroBranco: rgb(250, 230, 193);
+  --tabuleiroPreto:rgb(134, 134, 134);
+  --pecaAtual: rgba(114, 155, 158, 0.8);
+  --pecaAmeacada: rgba(208, 3, 3, 0.8);
+  --fundoTelaInicial: black;
+  --fundoTabuleiro: linear-gradient(0deg, rgb(204, 193, 171) 15%, var(--tabuleiroBranco) 40%, var(--tabuleiroPreto) 60%, rgba(60, 60, 60, 1) 85%);
+  --fundoTabuleiroVirado: linear-gradient(0deg, rgba(60, 60, 60, 1) 0%, rgba(60,60,60, 1) 15%, var(--tabuleiroPreto) 40%, var(--tabuleiroBranco) 60%, rgb(204, 193, 171) 85%);
+
+}
+
+
+/******************************************************
+
+		GERAL
+
+*******************************************************/
+
+body {
+
+font-family: Arial, Helvetica, sans-serif;
+backdrop-filter: blur(10px);
+background: var(--fundoTabuleiro);
+background-size: cover;
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+
+
+}
+
+h1{
+	font-size: 4em;
+}
+
+
+
+   .start-button {
+	z-index: 2;
+      padding: 15px 40px;
+      background: linear-gradient(145deg, #4CAF50, #2E7D32);
+      color: white;
+      font-size: 1.2rem;
+      border: 4px solid black;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .start-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .start-button:active {
+      transform: scale(0.97);
+    }
+
+
+
+table, th, td {
+	border-collapse: collapse;
+	border: 2px solid black;
+}
+
+@keyframes girando {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(180deg);
+	}
+}
+
+
+@keyframes voltando {
+	0% {
+		transform: rotate(180deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+
+@keyframes piscaPecas {
+	0% {
+		opacity: 0;
+	}
+	90% {
+		opacity: 0;
+	}/*
+	100% {
+		transform: scaleY(-1);
+	}*/
+	
+}
+
+
+@keyframes giraCartaFinal {
+	0% {
+		transform: rotate3d(0, 1, 0, 0deg);
+	}
+	50% {
+		transform: rotate3d(0, 1, 0, 90deg);
+	}
+	1000% {
+		transform: rotate3d(0, 1, 0, 180deg);
+	}/*
+	100% {
+		transform: scaleY(-1);
+	}*/
+	
+}
+
+/******************************************************
+
+		CLASSES
+
+*******************************************************/
+
+.casaBranca {
+	background-color: var(--tabuleiroBranco);
+	color: blueviolet;
+}
+
+.casaPrincipalBranca {
+	background-color: rgb(255, 243, 220);
+	color: blueviolet;
+	border: 6px black;
+	border-style: double;
+
+}
+
+
+.casaPrincipalPreta {
+	background-color: var(--tabuleiroPreto)
+	color: blueviolet;
+	border: 6px black;
+	border-style: double;
+}
+
+
+.casaPreta {
+	background-color: rgb(134, 134, 134);
+	color: blueviolet; 
+}
+
+.caminho {
+	width: 100%;
+	height: 100%;
+	background-color: var(--selecionado);
+	border: none;
+}
+
+.selecionada {
+	background-color: rgb(108, 108, 207);
+	border: none;
+}
+
+
+.semCaminho {
+	width: 90%;
+	height: 90%;
+	background-color: rgba(128, 236, 255, 0);
+	border: none;
+}
+
+.pecaInimiga {
+	width: 80%;
+	height: 3em;
+	margin: 0 10% 0 10%;
+	padding: 0px;
+}
+
+.tabuleiro {
+	width: 35em;
+	height: 35em;
+	border: 2px solid black;
+}
+
+#cartasBrancas {
+	width: 20em;
+	height: 7em;
+	border: 2px solid black;
+	margin: auto;
+	background-color: rgb(255, 243, 220);
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.carta {
+	width: 4em;
+	height: 5em;
+	border: 2px solid black;
+}
+
+.carta:hover {
+	width: 6em;
+	height: 7em;
+	border: 2px solid black;
+}
+
+.carta img {
+	width: 100%;
+	height: 100%;
+}
+
+.peca {
+	width: 80%;
+	height: 3em;
+	margin: 0 10% 0 10%;
+	padding: 0px;
+}
+
+.promocaoBranco {
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	padding: 20px;
+}
+
+.promocaoPreto {
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	padding: 40px;
+	transform: rotate(180deg);
+}
+
+
+/*
+
+
+
+
+quadrado
+.tabuleiro{
+    width: 740px;
+	height: 740px;
+	border: 2px solid black;
+	margin: auto;
+}
+
+
+tabela
+.tabuleiro{
+    width: 1600px;
+	height: 200px;
+}
+
+
+.peca{
+	width: 100%;
+	height: 100%;
+	margin: auto;
+}
+*/
+/******************************************************
+
+		IDS
+
+*******************************************************/
+
+
+#cartasPretas {
+	rotate: 180deg;
+	width: 20em;
+	height: 7em;
+	border: 2px solid black;
+	margin: auto;
+	background-color: rgb(134, 134, 134);
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+#cartaCentro {
+	width: 5em;
+	height: 6em;
+	border: 2px solid black;
+	background-color: #b08447;
+	display: flex;
+	
+	justify-content: center;
+	align-items: center;
+}
+
+
+
+#cartaCentro:hover {
+	width: 6em;
+	height: 7em;
+	border: 2px solid black;
+}
+
+#tabuleiroCarta {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#tabuleiro td {
+	width: 12%;
+	height: 12%;
+
+}
+
+
+#promocao {
+	display: none;
+	left: 20%;
+	top: 15%;
+	width: 800px;
+	height: 400px;
+	position: fixed;
+	background-color: white;
+	border: 2px solid gray;
+	box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.3);
+}
+
+
+
+#telaInicial{
+	display: flex;
+	flex-direction: column;
+justify-items: center;
+}
+
+#promocao input {
+	margin: 40px;
+}
+
+#fundoTelaInicial{
+	width: 30em;	
+} 
+#cartasTelaInicial{
+	position: fixed;
+	top: 5px;
+	left: 5px;
+	z-index: -1;
+}
+
+.cartaInicial{
+	height: 5em;
+	margin: 0;
+padding: 0;
+}
+
+#jogoCompleto{
+	display: none;
+}
+
+
+#telaFinal{
+	color: #FFF;
+	flex-direction: column;
+    justify-items: center;
+	display: none;
+	width: 100vw;
+	z-index: 0;
+	height: 100vh;
+	background: #FFF;
+background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0.6) 80%, rgba(255, 255, 255, 0) 100%);
+
+}
+
+
+
+@media (orientation: landscape) {
+
+#mensagemFinal{
+	margin-top: 15vw;
+	background: #FFF;
+background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.8) 60%, rgba(255, 255, 255, 0) 100%);
+}
+
+
+	#cartaFinal img{
+	width: 40vw;
+	height: 60vw;
+	z-index: -1;
+	position: fixed;
+	top: 5vw;
+	left: 30vw;
+animation: giraCartaFinal 10s linear infinite;
+}
+}
+
+@media (orientation: portrait) {
+
+
+#mensagemFinal{
+	margin-top: 40vw;
+	background: #FFF;
+background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.8) 60%, rgba(255, 255, 255, 0) 100%);
+}
+
+
+	#cartaFinal img{
+	width: 80vw;
+	height: 100vw;
+	z-index: -1;
+	position: fixed;
+	top: 20vw;
+	left: 10vw;
+animation: giraCartaFinal 10s linear infinite;
+}
+}
+
+/*******************************************************/
